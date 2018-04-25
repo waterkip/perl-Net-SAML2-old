@@ -56,7 +56,7 @@ __END__
 
     if ($ret) {
         my $assertion = Net::SAML2::Protocol::Assertion->new_from_xml(
-                xml => decode_base64($saml_response)
+            xml => decode_base64($saml_response)
         );
 
         # ...
