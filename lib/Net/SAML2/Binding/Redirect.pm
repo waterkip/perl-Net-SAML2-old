@@ -10,22 +10,22 @@ Net::SAML2::Binding::Redirect
 =head1 SYNOPSIS
 
   my $redirect = Net::SAML2::Binding::Redirect->new(
-    key => 'sign-nopw-cert.pem',
-    url => $sso_url,
-    param => 'SAMLRequest',
-    cacert => '/path/to/cac-cert.pem'
+        key    => 'sign-nopw-cert.pem',
+        url    => $sso_url,
+        param  => 'SAMLRequest',
+        cacert => '/path/to/cac-cert.pem' cert => 'path/to/cert.ca',
   );
 
   my $url = $redirect->sign($authnreq);
 
   # or
 
-  my $redirect = Net::SAML2::Binding::Redirect->new(
+  my $redir = Net::SAML2::Binding::Redirect->new(
     cert => $idp_cert,
     param => 'SAMLResponse',
   );
- 
-  my $ret = $redirect->verify($url);
+
+  my $ret = $redir->verify($url);
 
 =head1 METHODS
 
