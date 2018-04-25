@@ -7,7 +7,7 @@ requires "Crypt::OpenSSL::VerifyX509" => "0";
 requires "Crypt::OpenSSL::X509" => "0";
 requires "DateTime" => "0";
 requires "DateTime::Format::XSD" => "0";
-requires "Digest::SHA1" => "0";
+requires "Digest::SHA" => "0";
 requires "Exporter" => "0";
 requires "File::Slurp" => "0";
 requires "HTTP::Request::Common" => "0";
@@ -49,7 +49,7 @@ on 'test' => sub {
 
 on 'configure' => sub {
   requires "ExtUtils::MakeMaker" => "0";
-  requires "perl" => "5.008_001";
+  requires "perl" => "5.013010";
 };
 
 on 'develop' => sub {
