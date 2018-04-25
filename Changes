@@ -5,6 +5,8 @@ Revision history for Perl extension Net::SAML2.
     * New maintainer release
         * Use distzilla
         * Update testsuite
+    * Add the support for multiple Audiences within one
+      AudienceRestriction (Mike Katasonov)
 
 0.17     Fri 13 Jan 2012 13:41:23 GMT
 
