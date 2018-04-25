@@ -1,3 +1,5 @@
+use strict;
+use warnings;
 use Test::More;
 use Net::SAML2;
 
@@ -54,17 +56,61 @@ Iavyic/p4gZtXckweq+VTn9CdZp6ZTQtVw==
 </EntityDescriptor>
 XML
 
-my $idp = Net::SAML2::IdP->new_from_xml( xml => $xml, cacert => 't/cacert.pem' );
-ok($idp);
+my $idp = Net::SAML2::IdP->new_from_xml(
+    xml => $xml,
+    cacert => 't/cacert.pem'
+);
 
-ok($idp->sso_url($idp->binding('redirect')));
-ok($idp->slo_url($idp->binding('redirect')));
-ok($idp->art_url($idp->binding('soap')));
+isa_ok($idp, "Net::SAML2::IdP");
 
-ok($idp->cert('signing'));
-ok($idp->entityid eq 'http://sso.dev.venda.com/opensso');
+my $redirect_binding = $idp->binding('redirect');
+my $soap_binding     = $idp->binding('soap');
 
-ok('urn:oasis:names:tc:SAML:2.0:nameid-format:transient' eq $idp->format('transient'));
-ok('urn:oasis:names:tc:SAML:2.0:nameid-format:persistent' eq $idp->format);
+is(
+    $redirect_binding,
+    'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
+    "Has correct binding: HTTP-Redirect"
+);
+is(
+    $soap_binding,
+    'urn:oasis:names:tc:SAML:2.0:bindings:SOAP',
+    "Has correct binding: SOAP"
+);
+
+is(
+    $idp->sso_url($redirect_binding),
+    'http://sso.dev.venda.com/opensso/SSORedirect/metaAlias/idp',
+    'Has correct sso_url'
+);
+is(
+    $idp->slo_url($redirect_binding),
+    'http://sso.dev.venda.com/opensso/IDPSloRedirect/metaAlias/idp',
+    'Has correct slo_url'
+);
+is(
+    $idp->art_url($soap_binding),
+    'http://sso.dev.venda.com/opensso/ArtifactResolver/metaAlias/idp',
+    'Has correct art_url'
+);
+
+#like($idp->cert('signing'), qr/-----BEGIN CERTIFICATE-----\n.*\n-----END CERTIFICATE-----/, 'Looks like signing certificate');
+ok($idp->cert('signing'), 'Looks like signing certificate');
+
+is(
+    $idp->entityid,
+    'http://sso.dev.venda.com/opensso',
+    "Has the correct entityid"
+);
+
+is(
+    $idp->format('transient'),
+    'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
+    "has correct transient format"
+);
+is(
+    $idp->format,
+    'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
+    'has correct persistent format'
+);
 
 done_testing;
