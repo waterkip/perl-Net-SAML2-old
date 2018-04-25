@@ -8,6 +8,31 @@ Revision history for Perl extension Net::SAML2.
     * Add the support for multiple Audiences within one
       AudienceRestriction (Mike Katasonov)
 
+    * Sig.pm: improve compatibility with simplesamlphp (Peter Marschall)
+      This is a minimal patch against Sig.pm to make Net::SAML2 work
+      with simplesamlphp.  It is taken from
+      https://rt.cpan.org/Public/Bug/Display.html?id=76260, and has - as
+      you suggested - the namespace change left out.  I can confirm that
+      this version works as the original patch from #76260 did.
+      documentation updates
+    * A bunch of documentation updates (Peter Marschall):
+      * document required parameters
+      * consistently format methods & parameters: one space after ( , one before )
+      * document argument lists using pod's =item parameters to follow
+      * standard conversions instead of having then shown as code blocks
+        ... (some more minor things)
+
+    * IdP.pm: simplify $idp->format() a bit (Peter Marschall)
+      Make the 'return' at the end unconditional instead of having it wrapped in an 'else' block.
+    * Add additional attribute 'key' to Net::SAML2::SP (Peter Marschall)
+      Allow to have certificate & key files separate by using two different parameters when
+      creating the SP object. The new parameter 'key' points to the filename of the private
+      key of the file given in 'cert'.
+      This helps with distributions like e.g. Debian that separate certificate & private key files.
+    * Make Sig.pm use the Perl core (since Perl 5.10) module Digest::SHA
+      instead of Digest::SHA1 (Peter Marschall)
+
+
 0.17     Fri 13 Jan 2012 13:41:23 GMT
 
       Handle the InclusiveNamespaces element in XML Signature
