@@ -42,11 +42,21 @@ has 'response_to' => (isa => Str, is => 'ro', required => 1);
 
 Create a LogoutResponse object from the given XML.
 
+Arguments:
+
+=over
+
+=item B<xml>
+
+XML data
+
+=back
+
 =cut
 
 sub new_from_xml {
     my ($class, %args) = @_;
-     
+
     my $xpath = XML::XPath->new( xml => $args{xml} );
     $xpath->set_namespace('saml', 'urn:oasis:names:tc:SAML:2.0:assertion');
     $xpath->set_namespace('samlp', 'urn:oasis:names:tc:SAML:2.0:protocol');
