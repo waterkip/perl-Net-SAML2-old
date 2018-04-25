@@ -5,6 +5,7 @@ Revision history for Perl extension Net::SAML2.
     * New maintainer release
         * Use distzilla
         * Update testsuite
+
     * Add the support for multiple Audiences within one
       AudienceRestriction (Mike Katasonov)
 
@@ -24,6 +25,7 @@ Revision history for Perl extension Net::SAML2.
 
     * IdP.pm: simplify $idp->format() a bit (Peter Marschall)
       Make the 'return' at the end unconditional instead of having it wrapped in an 'else' block.
+
     * Add additional attribute 'key' to Net::SAML2::SP (Peter Marschall)
       Allow to have certificate & key files separate by using two different parameters when
       creating the SP object. The new parameter 'key' points to the filename of the private
@@ -31,6 +33,10 @@ Revision history for Perl extension Net::SAML2.
       This helps with distributions like e.g. Debian that separate certificate & private key files.
     * Make Sig.pm use the Perl core (since Perl 5.10) module Digest::SHA
       instead of Digest::SHA1 (Peter Marschall)
+
+    * Shibboleth compatibility and small documentation improvements (Oskari Okko Ojala)
+
+    * ForceAuthn in AuthnRequest (Oskari Okko Ojala)
 
 
 0.17     Fri 13 Jan 2012 13:41:23 GMT
