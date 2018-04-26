@@ -1,0 +1,11 @@
+image: perl:latest
+stages:
+  - test
+
+before_script:
+  - "cpanm --installdeps ."
+  - "perl Makefile.PL"
+
+test:
+  script:
+    - "make test"
