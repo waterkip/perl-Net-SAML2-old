@@ -30,13 +30,13 @@ Constructor
 
 =cut
 
-has 'entityid'       => (isa => Str, is => 'ro', required => 1);
-has 'cacert'         => (isa => Str, is => 'ro', required => 1);
-has 'sso_urls'       => (isa => HashRef[Str], is => 'ro', required => 1);
-has 'slo_urls'       => (isa => HashRef[Str], is => 'ro', required => 1);
-has 'art_urls'       => (isa => HashRef[Str], is => 'ro', required => 1);
-has 'certs'          => (isa => HashRef[Str], is => 'ro', required => 1);
-has 'formats'        => (isa => HashRef[Str], is => 'ro', required => 1);
+has 'entityid' => (isa => Str, is => 'ro', required => 1);
+has 'cacert'   => (isa => Str, is => 'ro', required => 1);
+has 'sso_urls' => (isa => HashRef [Str], is => 'ro', required => 1);
+has 'slo_urls' => (isa => HashRef [Str], is => 'ro', required => 1);
+has 'art_urls' => (isa => HashRef [Str], is => 'ro', required => 1);
+has 'certs'    => (isa => HashRef [Str], is => 'ro', required => 1);
+has 'formats'  => (isa => HashRef [Str], is => 'ro', required => 1);
 has 'default_format' => (isa => Str, is => 'ro', required => 1);
 
 =head2 new_from_url( url => $url, cacert => $cacert )
@@ -49,15 +49,15 @@ Dies if the metadata can't be retrieved.
 
 sub new_from_url {
     my ($class, %args) = @_;
-        
+
     my $req = GET $args{url};
-    my $ua = LWP::UserAgent->new;
+    my $ua  = LWP::UserAgent->new;
 
     my $res = $ua->request($req);
     die "no metadata" unless $res->is_success;
     my $xml = $res->content;
 
-    return $class->new_from_xml( xml => $xml, cacert => $args{cacert} );
+    return $class->new_from_xml(xml => $xml, cacert => $args{cacert});
 }
 
 =head2 new_from_xml( xml => $xml, cacert => $cacert )
@@ -70,39 +70,67 @@ document.
 sub new_from_xml {
     my ($class, %args) = @_;
 
-    my $xpath = XML::XPath->new( xml => $args{xml} );
+    my $xpath = XML::XPath->new(xml => $args{xml});
     $xpath->set_namespace('md', 'urn:oasis:names:tc:SAML:2.0:metadata');
     $xpath->set_namespace('ds', 'http://www.w3.org/2000/09/xmldsig#');
 
     my $data;
 
-    for my $sso ($xpath->findnodes('//md:EntityDescriptor/md:IDPSSODescriptor/md:SingleSignOnService')) {
+    for my $sso (
+        $xpath->findnodes(
+            '//md:EntityDescriptor/md:IDPSSODescriptor/md:SingleSignOnService'
+        )
+        )
+    {
         my $binding = $sso->getAttribute('Binding');
         $data->{SSO}->{$binding} = $sso->getAttribute('Location');
     }
 
-    for my $slo ($xpath->findnodes('//md:EntityDescriptor/md:IDPSSODescriptor/md:SingleLogoutService')) {
+    for my $slo (
+        $xpath->findnodes(
+            '//md:EntityDescriptor/md:IDPSSODescriptor/md:SingleLogoutService'
+        )
+        )
+    {
         my $binding = $slo->getAttribute('Binding');
         $data->{SLO}->{$binding} = $slo->getAttribute('Location');
     }
 
-    for my $art ($xpath->findnodes('//md:EntityDescriptor/md:IDPSSODescriptor/md:ArtifactResolutionService')) {
+    for my $art (
+        $xpath->findnodes(
+            '//md:EntityDescriptor/md:IDPSSODescriptor/md:ArtifactResolutionService'
+        )
+        )
+    {
         my $binding = $art->getAttribute('Binding');
         $data->{Art}->{$binding} = $art->getAttribute('Location');
     }
 
-    for my $format ($xpath->findnodes('//md:EntityDescriptor/md:IDPSSODescriptor/md:NameIDFormat')) {
+    for my $format (
+        $xpath->findnodes(
+            '//md:EntityDescriptor/md:IDPSSODescriptor/md:NameIDFormat')
+        )
+    {
         $format = $format->string_value;
-        my ($short_format) = $format =~ /urn:oasis:names:tc:SAML:(?:2.0|1.1):nameid-format:(.*)$/;
+        my ($short_format)
+            = $format
+            =~ /urn:oasis:names:tc:SAML:(?:2.0|1.1):nameid-format:(.*)$/;
         if (defined $short_format) {
             $data->{NameIDFormat}->{$short_format} = $format;
-            $data->{DefaultFormat} = $short_format unless exists $data->{DefaultFormat};
+            $data->{DefaultFormat} = $short_format
+                unless exists $data->{DefaultFormat};
         }
     }
 
-    for my $key ($xpath->findnodes('//md:EntityDescriptor/md:IDPSSODescriptor/md:KeyDescriptor')) {
+    for my $key (
+        $xpath->findnodes(
+            '//md:EntityDescriptor/md:IDPSSODescriptor/md:KeyDescriptor')
+        )
+    {
         my $use = $key->getAttribute('use');
-        my ($text) = $key->findvalue('ds:KeyInfo/ds:X509Data/ds:X509Certificate') =~ /^\s*(.+?)\s*$/s;
+        my ($text)
+            = $key->findvalue('ds:KeyInfo/ds:X509Data/ds:X509Certificate')
+            =~ /^\s*(.+?)\s*$/s;
 
         # rewrap the base64 data from the metadata; it may not
         # be wrapped at 64 characters as PEM requires
@@ -115,13 +143,17 @@ sub new_from_xml {
         push @lines, $text;
 
         $text = join "\n", @lines;
-                
+
         # form a PEM certificate
-        $data->{Cert}->{$use} = sprintf("-----BEGIN CERTIFICATE-----\n%s\n-----END CERTIFICATE-----\n", $text);
+        $data->{Cert}->{$use}
+            = sprintf(
+            "-----BEGIN CERTIFICATE-----\n%s\n-----END CERTIFICATE-----\n",
+            $text);
     }
-        
+
     my $self = $class->new(
-        entityid       => $xpath->findvalue('//md:EntityDescriptor/@entityID')->value,
+        entityid =>
+            $xpath->findvalue('//md:EntityDescriptor/@entityID')->value,
         sso_urls       => $data->{SSO},
         slo_urls       => $data->{SLO},
         art_urls       => $data->{Art},
@@ -137,13 +169,14 @@ sub new_from_xml {
 sub BUILD {
     my ($self) = @_;
     my $ca = Crypt::OpenSSL::VerifyX509->new($self->cacert);
-        
+
     for my $use (keys %{ $self->certs }) {
-        my $cert = Crypt::OpenSSL::X509->new_from_string($self->certs->{$use});
+        my $cert
+            = Crypt::OpenSSL::X509->new_from_string($self->certs->{$use});
         unless ($ca->verify($cert)) {
             die "can't verify IdP '$use' cert";
         }
-    }       
+    }
 }
 
 =head2 sso_url($binding)
@@ -207,7 +240,7 @@ sub binding {
         redirect => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
         soap     => 'urn:oasis:names:tc:SAML:2.0:bindings:SOAP',
     };
-        
+
     if (exists $bindings->{$name}) {
         return $bindings->{$name};
     }
@@ -233,7 +266,7 @@ sub format {
         return $self->formats->{$short_name};
     }
     elsif ($self->default_format) {
-        return $self->formats->{$self->default_format};
+        return $self->formats->{ $self->default_format };
     }
     else {
         return;
