@@ -23,7 +23,6 @@ requires "MooseX::Types::Moose" => "0";
 requires "MooseX::Types::URI" => "0";
 requires "URI" => "0";
 requires "URI::QueryParam" => "0";
-requires "XML::Canonical" => "0";
 requires "XML::CanonicalizeXML" => "0";
 requires "XML::Generator" => "0";
 requires "XML::XPath" => "0";
@@ -33,6 +32,8 @@ requires "perl" => "5.013010";
 requires "strict" => "0";
 requires "vars" => "0";
 requires "warnings" => "0";
+
+recommends "XML::Canonical" => "0";
 
 on 'test' => sub {
   requires "Data::Dumper" => "0";

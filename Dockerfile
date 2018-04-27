@@ -9,4 +9,3 @@ RUN apt-get update \
     && cpanm --installdeps . || (cat /root/.cpanm/work/*/build.log ; /bin/false)
 
 COPY . .
-RUN cpanm . || (cat /root/.cpanm/work/*/build.log ; /bin/false)
