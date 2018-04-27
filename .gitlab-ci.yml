@@ -13,7 +13,6 @@ stages:
   - build
   - test
 
-
 build:
   stage: build
   script:
@@ -24,6 +23,6 @@ build:
 
 test:
   stage: test
-   script:
-     - docker pull $CONTAINER_IMAGE:$CI_BUILD_REF_NAME
-     - docker run $CONTAINER_IMAGE:$CI_BUILD_REF_NAME prove -l -It/lib --formatter TAP::Formatter::Console
+  script:
+    - docker pull $CONTAINER_IMAGE:$CI_BUILD_REF_NAME
+    - docker run $CONTAINER_IMAGE:$CI_BUILD_REF_NAME prove -l -It/lib --formatter TAP::Formatter::Console
