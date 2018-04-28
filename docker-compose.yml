@@ -1,0 +1,22 @@
+version: '3.6'
+services:
+  net-saml2:
+    build:
+      context: "."
+      dockerfile: "Dockerfile"
+
+    user: "root"
+    command:
+      - "/usr/bin/env"
+      - "prove"
+      - "-lv"
+    volumes:
+      - "./lib:/root/lib"
+      - "./t:/root/t"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+networks:
+  default:
