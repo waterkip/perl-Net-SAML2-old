@@ -3,9 +3,7 @@ use Moose;
 use MooseX::Types::Moose qw/ Str /;
 use MooseX::Types::URI qw/ Uri /;
 
-=head1 NAME
-
-Net::SAML2::SP - SAML Service Provider object
+#ABSTRACT: SAML Service Provider object
 
 =head1 SYNOPSIS
 

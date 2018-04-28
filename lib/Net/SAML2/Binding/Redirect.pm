@@ -3,9 +3,7 @@ use Moose;
 use MooseX::Types::Moose qw/ Str /;
 use MooseX::Types::URI qw/ Uri /;
 
-=head1 NAME
-
-Net::SAML2::Binding::Redirect
+#ABSTRACT: Redirect bindings
 
 =head1 SYNOPSIS
 

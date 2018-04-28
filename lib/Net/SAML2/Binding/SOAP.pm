@@ -3,9 +3,7 @@ use Moose;
 use MooseX::Types::Moose qw/ Str Object /;
 use MooseX::Types::URI qw/ Uri /;
 
-=head1 NAME
-
-Net::SAML2::Binding::Artifact - SOAP binding for SAML2
+#ABSTRACT: SOAP binding for SAML2
 
 =head1 SYNOPSIS
 

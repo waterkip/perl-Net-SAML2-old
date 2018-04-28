@@ -1,5 +1,7 @@
 package Net::SAML2::XML::Sig;
 
+# ABSTRACT: XML Signature module
+
 # use 'our' on v5.6.0
 use vars qw($VERSION @EXPORT_OK %EXPORT_TAGS $DEBUG);
 

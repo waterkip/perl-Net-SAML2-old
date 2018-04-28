@@ -3,9 +3,7 @@ package                         # PAUSE hide
 use strict;
 use warnings;
 
-=head1 NAME 
-
-Saml2Test - test Dancer app for Net::SAML2
+# ABSTRACT - test Dancer app for Net::SAML2
 
 =head1 DESCRIPTION
 

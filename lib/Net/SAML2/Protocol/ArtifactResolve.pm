@@ -5,9 +5,7 @@ use MooseX::Types::URI qw/ Uri /;
 
 with 'Net::SAML2::Role::ProtocolMessage';
 
-=head1 NAME
-
-Net::SAML2::Protocol::ArtifactResolve - ArtifactResolve protocol class.
+#ABSTRACT: ArtifactResolve protocol class.
 
 =head1 SYNOPSIS
 

@@ -3,9 +3,7 @@ use Moose;
 use MooseX::Types::Moose qw/ Str Object HashRef ArrayRef /;
 use MooseX::Types::URI qw/ Uri /;
 
-=head1 NAME
-
-Net::SAML2::IdP - SAML Identity Provider object
+#ABSTRACT: SAML Identity Provider object
 
 =head1 SYNOPSIS
 

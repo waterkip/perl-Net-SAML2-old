@@ -8,9 +8,7 @@ use DateTime::Format::XSD;
 
 with 'Net::SAML2::Role::ProtocolMessage';
 
-=head1 NAME
-
-Net::SAML2::Protocol::Assertion - SAML2 assertion object
+# ABSTRACT: SAML2 assertion object
 
 =head1 SYNOPSIS
 

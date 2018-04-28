@@ -2,9 +2,7 @@ package Net::SAML2::Binding::POST;
 use Moose;
 use MooseX::Types::Moose qw/ Str /;
 
-=head1 NAME
-
-Net::SAML2::Binding::POST - HTTP POST binding for SAML2
+#ABSTRACT: HTTP POST binding for SAML2
 
 =head1 SYNOPSIS
 

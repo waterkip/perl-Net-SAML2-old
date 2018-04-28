@@ -6,9 +6,7 @@ use MooseX::Types::Common::String qw/ NonEmptySimpleStr /;
 
 with 'Net::SAML2::Role::ProtocolMessage';
 
-=head1 NAME
-
-Net::SAML2::Protocol::AuthnRequest - SAML2 AuthnRequest object
+# ABSTRACT: SAML2 AuthnRequest object
 
 =head1 SYNOPSIS
 

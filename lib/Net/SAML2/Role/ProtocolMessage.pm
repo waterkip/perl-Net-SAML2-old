@@ -5,9 +5,7 @@ use DateTime::Format::XSD;
 use Crypt::OpenSSL::Random;
 use XML::Generator;
 
-=head1 NAME
-
-Net::SAML2::Role::ProtocolMessage - common behaviour for Protocol messages
+# ABSTRACT: Common behaviour for Protocol messages
 
 =head1 DESCRIPTION
 

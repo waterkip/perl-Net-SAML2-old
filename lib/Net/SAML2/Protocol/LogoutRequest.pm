@@ -5,9 +5,7 @@ use MooseX::Types::URI qw/ Uri /;
 
 with 'Net::SAML2::Role::ProtocolMessage';
 
-=head1 NAME
-
-Net::SAML2::Protocol::LogoutRequest - the SAML2 LogoutRequest object
+# ABSTRACT: The SAML2 LogoutRequest object
 
 =head1 SYNOPSIS
 
