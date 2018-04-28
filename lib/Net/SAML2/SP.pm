@@ -20,6 +20,12 @@ use MooseX::Types::URI qw/ Uri /;
 use Crypt::OpenSSL::X509;
 use XML::Generator;
 
+use Net::SAML2::Binding::POST;
+use Net::SAML2::Binding::Redirect;
+use Net::SAML2::Binding::SOAP;
+use Net::SAML2::Protocol::AuthnRequest;
+use Net::SAML2::Protocol::LogoutRequest;
+
 =head2 new( ... )
 
 Constructor. Create an SP object. 

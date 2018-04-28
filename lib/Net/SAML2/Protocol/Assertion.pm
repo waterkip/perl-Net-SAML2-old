@@ -5,6 +5,7 @@ use MooseX::Types::DateTime qw/ DateTime /;
 use MooseX::Types::Common::String qw/ NonEmptySimpleStr /;
 use DateTime;
 use DateTime::Format::XSD;
+use XML::XPath;
 
 with 'Net::SAML2::Role::ProtocolMessage';
 

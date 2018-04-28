@@ -70,28 +70,23 @@ Returns the LogoutResponse as XML.
 sub as_xml {
     my ($self) = @_;
 
-    my $x = XML::Generator->new(':pretty');
+    my $x     = XML::Generator->new(':pretty');
     my $saml  = ['saml' => 'urn:oasis:names:tc:SAML:2.0:assertion'];
     my $samlp = ['samlp' => 'urn:oasis:names:tc:SAML:2.0:protocol'];
 
     $x->xml(
         $x->LogoutResponse(
             $samlp,
-            { ID => $self->id,
-              Version => '2.0',
-              IssueInstant => $self->issue_instant,
-              Destination => $self->destination,
-              InResponseTo => $self->response_to },
-            $x->Issuer(
-                $saml,
-                $self->issuer,
-            ),
+            {
+                ID           => $self->id,
+                Version      => '2.0',
+                IssueInstant => $self->issue_instant,
+                Destination  => $self->destination,
+                InResponseTo => $self->response_to
+            },
+            $x->Issuer($saml, $self->issuer,),
             $x->Status(
-                $samlp,
-                $x->StatusCode(
-                    $samlp,
-                    { Value => $self->status },
-                )
+                $samlp, $x->StatusCode($samlp, { Value => $self->status },)
             )
         )
     );

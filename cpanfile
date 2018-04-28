@@ -50,6 +50,9 @@ on 'test' => sub {
   requires "Test::Most" => "0";
   requires "Test::NoTabs" => "0";
   requires "Test::Pod" => "1.14";
+  requires "Import::Into" => "0";
+  requires "XML::LibXML::XPathContext" => "0";
+  requires "XML::LibXML" => "0";
   requires "Test::Pod::Coverage" => "1.04";
   requires "perl" => "5.013010";
 };

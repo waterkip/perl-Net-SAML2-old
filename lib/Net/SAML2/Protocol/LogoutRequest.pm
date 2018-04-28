@@ -72,31 +72,29 @@ Returns the LogoutRequest as XML.
 sub as_xml {
     my ($self) = @_;
 
-    my $x = XML::Generator->new(':pretty');
+    my $x     = XML::Generator->new(':pretty');
     my $saml  = ['saml' => 'urn:oasis:names:tc:SAML:2.0:assertion'];
     my $samlp = ['samlp' => 'urn:oasis:names:tc:SAML:2.0:protocol'];
 
     $x->xml(
         $x->LogoutRequest(
             $samlp,
-            { ID => $self->id,
-              IssueInstant => $self->issue_instant, 
-              Version => '2.0' },
-            $x->Issuer(
-                $saml,
-                $self->issuer,
-            ),
+            {
+                ID           => $self->id,
+                IssueInstant => $self->issue_instant,
+                Version      => '2.0'
+            },
+            $x->Issuer($saml, $self->issuer),
             $x->NameID(
                 $saml,
-                { Format => $self->nameid_format,
-                  NameQualifier => $self->destination,
-                  SPNameQualifier => $self->issuer },
+                {
+                    Format          => $self->nameid_format,
+                    NameQualifier   => $self->destination,
+                    SPNameQualifier => $self->issuer
+                },
                 $self->nameid,
             ),
-            $x->SessionIndex(
-                $samlp,
-                $self->session,
-            ),
+            $x->SessionIndex($samlp, $self->session,),
         )
     );
 }
