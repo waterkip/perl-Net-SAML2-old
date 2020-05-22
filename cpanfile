@@ -50,6 +50,11 @@ on 'configure' => sub {
 };
 
 on 'develop' => sub {
+  requires "Dancer" => "0";
+  requires "Dancer::Test" => "0";
+  requires "ExtUtils::MakeMaker" => "0";
+  requires "Plack::Handler::FCGI" => "0";
+  requires "Plack::Runner" => "0";
   requires "Pod::Coverage::TrustPod" => "0";
   requires "Test::EOF" => "0";
   requires "Test::EOL" => "0";
@@ -59,4 +64,6 @@ on 'develop' => sub {
   requires "Test::Pod" => "1.41";
   requires "Test::Pod::Coverage" => "1.08";
   requires "Test::TrailingSpace" => "0.0203";
+  requires "WWW::Mechanize" => "0";
+  requires "lib" => "0";
 };
